@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
 
-{% block title %}  Редактировать объявление {{ announcement.title }} {% endblock %}
+{% block title %} Редактировать объявление {{ announcement.title }} {% endblock %}
 
 {% block content %}
 
-<h1>Разместить новое объявление</h1>
+<h1>Редактировать объявление</h1>
 <br>
 
 {% if user.id == announcement.author.id %}
     <div class="mb-3">
         <form method="POST">
             {% csrf_token %}
+            {{ form.media }}
             {{ form.as_p }}
             <button class='btn btn-secondary'>Сохранить изменения</button>
         </form>

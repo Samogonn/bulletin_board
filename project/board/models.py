@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from datetime import datetime, date
+from ckeditor.fields import RichTextField
 
 
 class Category(models.Model):
@@ -19,7 +20,7 @@ class Announcement(models.Model):
     title_tag = models.CharField("Тэг заголовка", max_length=255)
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Автор")
     publication_datetime = models.DateTimeField("Дата публикации", auto_now_add=True)
-    text = models.TextField("Текст")
+    text = RichTextField("Текст", blank=True, null=True)
     image = models.ImageField("Картинка", null=True, blank=True, upload_to="images/")
 
     category = models.ManyToManyField(Category, verbose_name="Категория")

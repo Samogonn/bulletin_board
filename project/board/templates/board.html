@@ -18,8 +18,9 @@
             <small><a href="{% url 'delete_announcement' announcement.pk %}">Удалить объявление</a></small>
         
         {% endif %}
-<br/>
-        {{announcement.text|slice:":200"}}
+        <br/>
+        
+        {{announcement.text|slice:":200"|safe}}
         <hr>
     </li>
 {% endfor %}
