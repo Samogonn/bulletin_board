@@ -29,3 +29,21 @@ class Announcement(models.Model):
 
     def get_absolute_url(self):
         return reverse("announcement_details", kwargs={"pk": self.pk})
+
+
+class Response(models.Model):
+    announcement = models.ForeignKey(
+        Announcement,
+        related_name="responses",
+        on_delete=models.CASCADE,
+        verbose_name="Объявление",
+    )
+    name = models.CharField(max_length=124)
+    text = models.TextField(default="")
+    datetime_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.announcement.title} - {self.name}"
+
+    def get_absolute_url(self):
+        return reverse("board")

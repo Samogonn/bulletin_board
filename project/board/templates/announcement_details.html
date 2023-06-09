@@ -30,4 +30,24 @@
 
 <a href="{% url 'board' %}" class="btn btn-secondary">Back</a>
 
+<hr>
+
+<h3>Отклики:</h3>
+<br/>
+
+{% if not announcement.responses.all %}
+    <p>Пока никто не откликнулся на это объявление</p>
+    <a href="#">Добавить отклик</a>
+
+{% else %}
+    {% for res in announcement.responses.all %}
+        <strong>{{ res.name }} - {{ res.datetime_added }}</strong><br/>
+
+        {{ res.text }}<br/>
+        <hr>
+
+    {% endfor %}
+
+{% endif %}
+
 {% endblock %}
