@@ -6,12 +6,19 @@
 
 <h3>Вы уверены, что хотите удалить объявление {{ announcement.title }}?</h3>
 <br>
-<div class="mb-3">
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class='btn btn-secondary'>Удалить</button>
-</form>
-</div>
+
+{% if user.id == announcement.author.id %}
+    <div class="mb-3">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class='btn btn-secondary'>Удалить</button>
+        </form>
+    </div>
+{% else %}
+    <div class="mb-3">
+        <p>Вы не можете удалить чужой пост</p>
+    </div>
+{% endif %}
 
 {% endblock %}

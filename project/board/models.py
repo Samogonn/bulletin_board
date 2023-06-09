@@ -4,12 +4,25 @@ from django.urls import reverse
 from datetime import datetime, date
 
 
+class Category(models.Model):
+    name = models.CharField("Название", max_length=255)
+
+    def __str__(self):
+        return f"{self.name}"
+
+    def get_absolute_url(self):
+        return reverse("board")
+
+
 class Announcement(models.Model):
     title = models.CharField("Заголовок", max_length=255)
     title_tag = models.CharField("Тэг заголовка", max_length=255)
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Автор")
-    text = models.TextField("Текст")
     publication_datetime = models.DateTimeField("Дата публикации", auto_now_add=True)
+    text = models.TextField("Текст")
+    image = models.ImageField("Картинка", null=True, blank=True, upload_to="images/")
+
+    category = models.ManyToManyField(Category, verbose_name="Категория")
 
     def __str__(self):
         return f"{self.title} | {self.author}"
