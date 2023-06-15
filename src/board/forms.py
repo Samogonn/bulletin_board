@@ -1,5 +1,5 @@
 from django import forms
-from .models import Announcement
+from .models import Announcement, Response
 
 
 class AnnouncementForm(forms.ModelForm):
@@ -12,7 +12,6 @@ class AnnouncementForm(forms.ModelForm):
             "category",
             "text",
             "image",
-            "snippet",
         )
 
         widgets = {
@@ -29,5 +28,15 @@ class AnnouncementForm(forms.ModelForm):
             # "author": forms.Select(attrs={"class": "form-control"}),
             "category": forms.SelectMultiple(attrs={"class": "form-control"}),
             "text": forms.Textarea(attrs={"class": "form-control"}),
-            "snippet": forms.Textarea(attrs={"class": "form-control"}),
+        }
+
+
+class ResponseForm(forms.ModelForm):
+    class Meta:
+        model = Response
+        fields = ("name", "text")
+
+        widgets = {
+            "name": forms.TextInput(attrs={"class": "form-control"}),
+            "text": forms.Textarea(attrs={"class": "form-control"}),
         }

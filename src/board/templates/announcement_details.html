@@ -15,22 +15,27 @@
 <br/>
     {% endif %}
 
-    {{ announcement.text|safe }}
+    <br/>
 
+    {{ announcement.text|safe }}
+    <br/>
+
+    Категории объявления:    
     {% for cat in announcement.category.all %}
         {{ cat }}
     {% endfor  %}
-
-<hr>
 
 {% if announcement.image %}
     <img src="{{ announcement.image.url }}"><br/>
 {% endif %}
 
-<div>{{ announcement.text }}</div>
-<br/>
+<br/><br/>
 
 <a href="{% url 'board' %}" class="btn btn-secondary">Back</a>
+
+<br/><br/><br/>
+
+
 
 <hr>
 
@@ -39,9 +44,11 @@
 
 {% if not announcement.responses.all %}
     <p>Пока никто не откликнулся на это объявление</p>
-    <a href="#">Добавить отклик</a>
+    <a href="{% url 'add_response' announcement.pk %}">Добавить отклик</a>
 
 {% else %}
+    <a href="{% url 'add_response' announcement.pk %}">Добавить отклик</a><br/><br/>
+    
     {% for res in announcement.responses.all %}
         <strong>{{ res.name }} - {{ res.datetime_added }}</strong><br/>
 

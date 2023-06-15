@@ -1,3 +1,5 @@
+from django.forms.models import BaseModelForm
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import (
     ListView,
@@ -6,8 +8,9 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from .forms import AnnouncementForm
-from .models import Announcement
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import AnnouncementForm, ResponseForm
+from .models import Announcement, Response
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
@@ -30,8 +33,18 @@ class AddAnnouncementView(CreateView):
     template_name = "add_announcement.html"
 
 
-@method_decorator(login_required, name="dispatch")
-class UpdateAnnouncementView(UpdateView):
+class AddResponseView(CreateView):
+    model = Response
+    form_class = ResponseForm
+    template_name = "add_response.html"
+    success_url = reverse_lazy("board")
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        form.instance.announcement_id = self.kwargs["pk"]
+        return super().form_valid(form)
+
+
+class UpdateAnnouncementView(LoginRequiredMixin, UpdateView):
     model = Announcement
     form_class = AnnouncementForm
     template_name = "update_announcement.html"
@@ -41,3 +54,9 @@ class DeleteAnnouncementView(DeleteView):
     model = Announcement
     template_name = "delete_announcement.html"
     success_url = reverse_lazy("board")
+
+
+class DeleteResponseView(DeleteView):
+    model = Response
+    template_name = "delete_response.html"
+    success_url = reverse_lazy("profile")

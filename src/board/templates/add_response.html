@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %} Разместить отклик {% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    <h1>Разместить отклик</h1>
+    <br>
+    <div class="mb-3">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class='btn btn-secondary'>Оставить отклик</button>
+        </form>
+    </div>
+
+{% else %}
+        <div class="mb-3">
+            <p>Сначала авторизуйтесь</p>
+            <a class='btn btn-secondary' href='{% url 'login' %}'>Войти<a/>
+        </div>
+{% endif %}
+
+
+
+
+{% endblock %}

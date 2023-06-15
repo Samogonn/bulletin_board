@@ -22,11 +22,10 @@ class Announcement(models.Model):
     publication_datetime = models.DateTimeField("Дата публикации", auto_now_add=True)
     text = RichTextField("Текст", blank=True, null=True)
     image = models.ImageField("Картинка", null=True, blank=True, upload_to="images/")
-    snippet = models.CharField(max_length=255)
     category = models.ManyToManyField(Category, verbose_name="Категория")
 
     def __str__(self):
-        return f"{self.title} | {self.author}"
+        return f"{self.title}"
 
     def get_absolute_url(self):
         return reverse("announcement_details", kwargs={"pk": self.pk})

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}  Удалить отклик {{ response.title }} {% endblock %}
+
+{% block content %}
+
+<h3>Вы уверены, что хотите отклик {{ response.title }}?</h3>
+<br>
+
+{% if user.id == response.announcement.author.id %}
+    <div class="mb-3">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class='btn btn-secondary'>Удалить</button>
+        </form>
+    </div>
+{% else %}
+    <div class="mb-3">
+        <p>Вы не можете удалить отклик на чужой пост</p>
+    </div>
+{% endif %}
+
+{% endblock %}

@@ -14,16 +14,16 @@
 
         
         {% if user.id == announcement.author.id %}
-            <small><a href="{% url 'update_announcement' announcement.pk %}">Редактировать объявление</a></small>
-            <small><a href="{% url 'delete_announcement' announcement.pk %}">Удалить объявление</a></small>
+            <small><a href="{% url 'update_announcement' announcement.pk %}">Редактировать</a></small>
+            <small><a href="{% url 'delete_announcement' announcement.pk %}">Удалить</a></small>
         
         {% endif %}
         <br/>
         
-        {{announcement.snippet}}
+        {{announcement.text|slice:200|safe}}
         <hr>
     </li>
 {% endfor %}
-<ul/>
+</ul>
 
 {% endblock %}

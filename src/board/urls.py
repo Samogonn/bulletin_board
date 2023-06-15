@@ -5,6 +5,8 @@ from .views import (
     AddAnnouncementView,
     UpdateAnnouncementView,
     DeleteAnnouncementView,
+    DeleteResponseView,
+    AddResponseView,
 )
 
 
@@ -15,7 +17,16 @@ urlpatterns = [
         AnnouncementDetailView.as_view(),
         name="announcement_details",
     ),
-    path("add_announcement/", AddAnnouncementView.as_view(), name="add_announcement"),
+    path(
+        "add_announcement/",
+        AddAnnouncementView.as_view(),
+        name="add_announcement",
+    ),
+    path(
+        "announcement/<int:pk>/response",
+        AddResponseView.as_view(),
+        name="add_response",
+    ),
     path(
         "announcement/edit/<int:pk>",
         UpdateAnnouncementView.as_view(),
@@ -25,5 +36,10 @@ urlpatterns = [
         "announcement/<int:pk>/delete",
         DeleteAnnouncementView.as_view(),
         name="delete_announcement",
+    ),
+    path(
+        "response/<int:pk>/delete",
+        DeleteResponseView.as_view(),
+        name="delete_response",
     ),
 ]

@@ -1,8 +1,65 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Страница авторизованного пользователя {{request.user.username}}</h2>
-<div> Здесь может содержаться персональная информация для каждого пользователя </div>
+<br/>
+<h2>Личная страница пользователя {{ request.user.username }}</h2>
+<br/>
 
-<button> <a href="sign/logout/">Выйти</a> </button>
+<a class="btn btn-secondary" href="{% url 'edit_profile' %}">Редактировать профиль</a>
+<a class='btn btn-secondary' href="sign/logout/">Выйти</a>
+<br/><br/>
+
+<div class="card" style="widmax-width: 540px;">
+  <div class="row">
+    <div class="col-md-4">
+      <img class="card-img-top" src="{{ user.profile.user_photo.url }}" alt="Card image cap">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ user.username }}</h5>
+        <p class="card-text">{{ user.first_name }} {{ user.last_name }} </p>
+        <p class="card-text">{{ user.profile.bio }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<br/>
+
+<h3>Отклики на Ваши объявления:</h3>
+
+
+<div class="col-lg-8">
+  <div class="card mb-4">
+      <div class="card-header">Поиск</div>
+      <div class="card-body">
+          <form class="form-control" method="GET">
+              {{ filter.form }}
+              <input type="submit" value="Найти">
+          </form>
+      </div>
+  </div>
+</div>
+
+{% for r in filter.qs %}
+
+  <div class="card">
+    <div class="card-header">
+      <h5>Отклик на объявление <a href="{% url 'announcement_details' r.announcement.id %}">{{ r.announcement }}</a></h5>
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{ r.text }}</p>
+    </div>
+    <div class="card-footer bg-transparent">
+      Этот отклик оставил {{ r.name }}
+      <a class="btn btn-secondary" href="">Принять отклик</a>
+      <a class="btn btn-secondary" href="{% url 'delete_response' r.id %}">Удалить отклик</a>
+    </div>
+
+  </div>
+
+  <br/>
+{% endfor %}
+
+<br/>
+
 {% endblock %}
