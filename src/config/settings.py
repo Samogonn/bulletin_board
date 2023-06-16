@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "ckeditor",
     "board",
     "accounts",
+    "mailings.apps.MailingsConfig",
 ]
 
 SITE_ID = 1

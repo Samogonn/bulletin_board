@@ -38,12 +38,13 @@ class Response(models.Model):
         on_delete=models.CASCADE,
         verbose_name="Объявление",
     )
-    name = models.CharField(max_length=124)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     text = models.TextField(default="")
     datetime_added = models.DateTimeField(auto_now_add=True)
+    is_accepted = models.BooleanField("Отклик принят?", default=False)
 
     def __str__(self):
-        return f"{self.announcement.title} - {self.name}"
+        return f"{self.announcement.title} - {self.author}"
 
     def get_absolute_url(self):
         return reverse("board")

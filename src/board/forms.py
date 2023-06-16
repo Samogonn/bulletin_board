@@ -34,9 +34,16 @@ class AnnouncementForm(forms.ModelForm):
 class ResponseForm(forms.ModelForm):
     class Meta:
         model = Response
-        fields = ("name", "text")
+        fields = ("author", "text")
 
         widgets = {
-            "name": forms.TextInput(attrs={"class": "form-control"}),
+            "author": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "value": "",
+                    "id": "unique_id",
+                    "type": "hidden",
+                }
+            ),
             "text": forms.Textarea(attrs={"class": "form-control"}),
         }

@@ -7,6 +7,7 @@ from .views import (
     DeleteAnnouncementView,
     DeleteResponseView,
     AddResponseView,
+    accept_response,
 )
 
 
@@ -42,4 +43,5 @@ urlpatterns = [
         DeleteResponseView.as_view(),
         name="delete_response",
     ),
+    path("response/<int:pk>/accept", accept_response, name="accept_response"),
 ]

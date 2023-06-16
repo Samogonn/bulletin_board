@@ -1,6 +1,6 @@
 from django.forms.models import BaseModelForm
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, get_list_or_404
 from django.views.generic import (
     ListView,
     DetailView,
@@ -13,7 +13,7 @@ from .forms import AnnouncementForm, ResponseForm
 from .models import Announcement, Response
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
 
 class BoardView(ListView):
@@ -60,3 +60,11 @@ class DeleteResponseView(DeleteView):
     model = Response
     template_name = "delete_response.html"
     success_url = reverse_lazy("profile")
+
+
+def accept_response(request, pk):
+    reply = Response.objects.get(id=request.POST.get("response_id"))
+    reply.is_accepted = True
+    reply.save(force_update=True)
+
+    return HttpResponseRedirect(reverse("profile"))

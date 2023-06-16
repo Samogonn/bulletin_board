@@ -14,6 +14,11 @@
             <button class='btn btn-secondary'>Оставить отклик</button>
         </form>
     </div>
+    
+    <script>
+        const name = '{{ user.id }}';
+        document.getElementById('unique_id').value = name;
+    </script>
 
 {% else %}
         <div class="mb-3">
